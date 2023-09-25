@@ -1,0 +1,21 @@
+---
+- hosts: solr
+  become: true
+
+  vars_files:
+    - vars.yml
+  
+  pre_tasks:
+    - name: Update apt cache if needed.
+      yum: 
+        update_cache: true 
+  
+  handlers:
+    - name: restart solr
+      service: name=solr state=restarted
+  
+  tasks:
+    - name: Install Java.
+      yum:
+        name: java-1.8.0-openjdk
+        state: present
